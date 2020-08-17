@@ -2,20 +2,26 @@
   "configVersion": 2,
   "packages": [
     {
-      "name": "analyzer",
-      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/analyzer-0.35.4",
+      "name": "_fe_analyzer_shared",
+      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/_fe_analyzer_shared-6.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.1"
+      "languageVersion": "2.2"
+    },
+    {
+      "name": "analyzer",
+      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/analyzer-0.39.16",
+      "packageUri": "lib/",
+      "languageVersion": "2.7"
     },
     {
       "name": "aqueduct",
-      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/aqueduct-3.3.0+1",
+      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/aqueduct-4.0.0-b1",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
     {
       "name": "aqueduct_test",
-      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/aqueduct_test-1.0.1",
+      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/aqueduct_test-2.0.0-b1",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
@@ -38,8 +44,26 @@
       "languageVersion": "2.0"
     },
     {
+      "name": "buffer",
+      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/buffer-1.0.7",
+      "packageUri": "lib/",
+      "languageVersion": "2.7"
+    },
+    {
       "name": "charcode",
       "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/charcode-1.1.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "checked_yaml",
+      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/checked_yaml-1.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.3"
+    },
+    {
+      "name": "cli_util",
+      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/cli_util-0.1.4",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
@@ -62,22 +86,34 @@
       "languageVersion": "1.17"
     },
     {
+      "name": "coverage",
+      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/coverage-0.14.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.7"
+    },
+    {
       "name": "crypto",
       "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/crypto-2.1.5",
       "packageUri": "lib/",
       "languageVersion": "2.3"
     },
     {
-      "name": "front_end",
-      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/front_end-0.1.14",
+      "name": "csslib",
+      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/csslib-0.16.2",
       "packageUri": "lib/",
-      "languageVersion": "2.1"
+      "languageVersion": "2.2"
     },
     {
       "name": "glob",
       "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/glob-1.2.0",
       "packageUri": "lib/",
       "languageVersion": "2.1"
+    },
+    {
+      "name": "html",
+      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/html-0.14.0+3",
+      "packageUri": "lib/",
+      "languageVersion": "2.3"
     },
     {
       "name": "http",
@@ -116,16 +152,10 @@
       "languageVersion": "2.0"
     },
     {
-      "name": "json_rpc_2",
-      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/json_rpc_2-2.2.1",
+      "name": "json_annotation",
+      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/json_annotation-3.0.1",
       "packageUri": "lib/",
-      "languageVersion": "2.2"
-    },
-    {
-      "name": "kernel",
-      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/kernel-0.3.14",
-      "packageUri": "lib/",
-      "languageVersion": "2.0"
+      "languageVersion": "2.6"
     },
     {
       "name": "logging",
@@ -135,9 +165,9 @@
     },
     {
       "name": "matcher",
-      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/matcher-0.12.5",
+      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/matcher-0.12.9",
       "packageUri": "lib/",
-      "languageVersion": "2.0"
+      "languageVersion": "2.7"
     },
     {
       "name": "meta",
@@ -148,12 +178,6 @@
     {
       "name": "mime",
       "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/mime-0.9.6+3",
-      "packageUri": "lib/",
-      "languageVersion": "2.0"
-    },
-    {
-      "name": "multi_server_socket",
-      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/multi_server_socket-1.0.2",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
@@ -219,9 +243,9 @@
     },
     {
       "name": "postgres",
-      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/postgres-1.0.2",
+      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/postgres-2.1.1",
       "packageUri": "lib/",
-      "languageVersion": "2.0"
+      "languageVersion": "2.2"
     },
     {
       "name": "pub_cache",
@@ -236,8 +260,20 @@
       "languageVersion": "2.0"
     },
     {
+      "name": "pubspec_parse",
+      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/pubspec_parse-0.1.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.2"
+    },
+    {
+      "name": "runtime",
+      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/runtime-1.0.0-9",
+      "packageUri": "lib/",
+      "languageVersion": "2.2"
+    },
+    {
       "name": "safe_config",
-      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/safe_config-2.0.2",
+      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/safe_config-3.0.0-b2",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
@@ -267,9 +303,9 @@
     },
     {
       "name": "source_map_stack_trace",
-      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/source_map_stack_trace-1.1.5",
+      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/source_map_stack_trace-2.0.0",
       "packageUri": "lib/",
-      "languageVersion": "1.8"
+      "languageVersion": "2.7"
     },
     {
       "name": "source_maps",
@@ -309,21 +345,21 @@
     },
     {
       "name": "test",
-      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/test-1.6.3",
+      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/test-1.15.3",
       "packageUri": "lib/",
-      "languageVersion": "2.2"
+      "languageVersion": "2.7"
     },
     {
       "name": "test_api",
-      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/test_api-0.2.5",
+      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/test_api-0.2.18",
       "packageUri": "lib/",
-      "languageVersion": "2.1"
+      "languageVersion": "2.7"
     },
     {
       "name": "test_core",
-      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/test_core-0.2.5",
+      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/test_core-0.3.11",
       "packageUri": "lib/",
-      "languageVersion": "2.1"
+      "languageVersion": "2.7"
     },
     {
       "name": "typed_data",
@@ -332,10 +368,10 @@
       "languageVersion": "2.4"
     },
     {
-      "name": "vm_service_client",
-      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/vm_service_client-0.2.6+3",
+      "name": "vm_service",
+      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/vm_service-4.2.0",
       "packageUri": "lib/",
-      "languageVersion": "2.0"
+      "languageVersion": "2.6"
     },
     {
       "name": "watcher",
@@ -346,6 +382,12 @@
     {
       "name": "web_socket_channel",
       "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/web_socket_channel-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "webkit_inspection_protocol",
+      "rootUri": "file:///Users/seenickcode/.pub-cache/hosted/pub.dartlang.org/webkit_inspection_protocol-0.7.3",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
@@ -362,7 +404,7 @@
       "languageVersion": "2.0"
     }
   ],
-  "generated": "2020-08-07T12:36:00.153207Z",
+  "generated": "2020-08-09T23:37:15.253147Z",
   "generator": "pub",
   "generatorVersion": "2.9.0"
 }

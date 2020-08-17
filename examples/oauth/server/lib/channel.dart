@@ -1,10 +1,16 @@
+import 'models/user.dart';
+import 'controllers/protected_controller.dart';
 import 'oauth.dart';
+import 'package:aqueduct/managed_auth.dart';
 
 /// This type initializes an application.
 ///
 /// Override methods in this class to set up routes and initialize services like
 /// database connections. See http://aqueduct.io/docs/http/channel/.
 class OauthChannel extends ApplicationChannel {
+  ManagedContext context;
+  AuthServer authServer;
+
   /// Initialize services in this method.
   ///
   /// Implement this method to initialize services, read values from [options]
@@ -13,7 +19,21 @@ class OauthChannel extends ApplicationChannel {
   /// This method is invoked prior to [entryPoint] being accessed.
   @override
   Future prepare() async {
-    logger.onRecord.listen((rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
+    logger.onRecord.listen(
+        (rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
+
+    final config = AppConfig(options.configurationFilePath);
+    final dataModel = ManagedDataModel.fromCurrentMirrorSystem();
+    final persistentStore = PostgreSQLPersistentStore.fromConnectionInfo(
+        config.database.username,
+        config.database.password,
+        config.database.host,
+        config.database.port,
+        config.database.databaseName);
+
+    context = ManagedContext(dataModel, persistentStore);
+
+    authServer = AuthServer(ManagedAuthDelegate<User>(context));
   }
 
   /// Construct the request channel.
@@ -28,12 +48,28 @@ class OauthChannel extends ApplicationChannel {
 
     // Prefer to use `link` instead of `linkFunction`.
     // See: https://aqueduct.io/docs/http/request_controller/
+    router.route("/healthz").linkFunction((request) async {
+      return Response.ok({"status": "ok"});
+    });
+
+    // Set up auth token route- this grants and refresh tokens
+    router.route("/auth/token").link(() => AuthController(authServer));
+
+    // Set up auth code route- this grants temporary access codes that can be exchanged for token
+    router.route("/auth/code").link(() => AuthRedirectController(authServer));
+
+    // Set up protected route
     router
-      .route("/example")
-      .linkFunction((request) async {
-        return Response.ok({"key": "value"});
-      });
+        .route("/protected")
+        .link(() => Authorizer.bearer(authServer))
+        .link(() => ProtectedController());
 
     return router;
   }
+}
+
+class AppConfig extends Configuration {
+  AppConfig(String path) : super.fromFile(File(path));
+
+  DatabaseConfiguration database;
 }
