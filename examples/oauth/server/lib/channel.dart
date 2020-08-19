@@ -1,5 +1,6 @@
 import 'models/user.dart';
 import 'controllers/protected_controller.dart';
+import 'controllers/register_controller.dart';
 import 'oauth.dart';
 import 'package:aqueduct/managed_auth.dart';
 
@@ -52,17 +53,21 @@ class OauthChannel extends ApplicationChannel {
       return Response.ok({"status": "ok"});
     });
 
+    router
+      .route("/register")
+      .link(() => RegisterController(context, authServer));
+
     // Set up auth token route- this grants and refresh tokens
     router.route("/auth/token").link(() => AuthController(authServer));
 
-    // Set up auth code route- this grants temporary access codes that can be exchanged for token
-    router.route("/auth/code").link(() => AuthRedirectController(authServer));
+    // // Set up auth code route- this grants temporary access codes that can be exchanged for token
+    // router.route("/auth/code").link(() => AuthRedirectController(authServer));
 
     // Set up protected route
     router
-        .route("/protected")
-        .link(() => Authorizer.bearer(authServer))
-        .link(() => ProtectedController());
+      .route("/protected")
+      .link(() => Authorizer.bearer(authServer))
+      .link(() => ProtectedController());
 
     return router;
   }

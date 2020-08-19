@@ -13,8 +13,6 @@ class RegisterController extends QueryController<User> {
           body: {"error": "username and password required."});
     }
 
-    query.values.username = query.values.username.toLowerCase();
-
     final salt = AuthUtility.generateRandomSalt();
     final hashedPassword =
         AuthUtility.generatePasswordHash(query.values.password, salt);
@@ -24,12 +22,7 @@ class RegisterController extends QueryController<User> {
     query.values.email = query.values.username;
 
     final u = await query.insert();
-    final token = await authServer.authenticate(
-        u.username,
-        query.values.password,
-        request.authorization.credentials.username,
-        request.authorization.credentials.password);
 
-    return AuthController.tokenResponse(token);
+    return Response.ok(u);
   }
 }
