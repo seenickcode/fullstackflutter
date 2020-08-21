@@ -1,8 +1,8 @@
-import 'models/user.dart';
+import 'package:aqueduct/managed_auth.dart';
 import 'controllers/protected_controller.dart';
 import 'controllers/register_controller.dart';
+import 'models/user.dart';
 import 'oauth.dart';
-import 'package:aqueduct/managed_auth.dart';
 
 /// This type initializes an application.
 ///
