@@ -1,8 +1,9 @@
-import 'models/user.dart';
+import 'package:aqueduct/managed_auth.dart';
+import 'controllers/oauth_redirect_renderer.dart';
 import 'controllers/protected_controller.dart';
 import 'controllers/register_controller.dart';
+import 'models/user.dart';
 import 'oauth.dart';
-import 'package:aqueduct/managed_auth.dart';
 
 /// This type initializes an application.
 ///
@@ -11,6 +12,8 @@ import 'package:aqueduct/managed_auth.dart';
 class OauthChannel extends ApplicationChannel {
   ManagedContext context;
   AuthServer authServer;
+  AuthRedirectController authRedirController;
+  OAuthRedirectRenderer renderer;
 
   /// Initialize services in this method.
   ///
@@ -34,6 +37,11 @@ class OauthChannel extends ApplicationChannel {
 
     context = ManagedContext(dataModel, persistentStore);
 
+    renderer = OAuthRedirectRenderer();
+
+    authRedirController =
+        AuthRedirectController(authServer, delegate: renderer);
+
     authServer = AuthServer(ManagedAuthDelegate<User>(context));
   }
 
@@ -54,20 +62,30 @@ class OauthChannel extends ApplicationChannel {
     });
 
     router
-      .route("/register")
-      .link(() => RegisterController(context, authServer));
+        .route("/register")
+        .link(() => RegisterController(context, authServer));
 
     // Set up auth token route- this grants and refresh tokens
     router.route("/auth/token").link(() => AuthController(authServer));
 
+    // NOTE disabling this in lieu of just baking it into our registration and login actions
+    // as it expects us to have a webapp form for the user to
+    // enter their credentials, which is overkill for this example. Instead, we will
+    // serve up the form from the native app (even though it is less secure and does not
+    // follow the 'AppAuth' pattern. At the end of the day, we're still using auth code flow
+    // in order to get a proper refresh token.
+    // In the mobile app, we'd have to securely store the auth token, refresh token
+    // and (???) client ID and secret? (still troubleshooting refresh flow)
     // // Set up auth code route- this grants temporary access codes that can be exchanged for token
-    // router.route("/auth/code").link(() => AuthRedirectController(authServer));
+    router
+        .route("/auth/code")
+        .link(() => AuthRedirectController(authServer, delegate: renderer));
 
     // Set up protected route
     router
-      .route("/protected")
-      .link(() => Authorizer.bearer(authServer))
-      .link(() => ProtectedController());
+        .route("/protected")
+        .link(() => Authorizer.bearer(authServer))
+        .link(() => ProtectedController());
 
     return router;
   }

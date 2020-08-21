@@ -1,0 +1,20 @@
+<html>
+  <body>
+    <form action="/register" method="post">
+      <label for="email"><b>Username</b></label>
+      <br />
+      <input type="text" placeholder="Enter username" name="username" required />
+      <br />
+      <label for="password"><b>Password</b></label>
+      <br />
+      <input type="password" placeholder="Enter Password" name="password" required />
+      <br />
+      <input type="hidden" name="response_type" value="code" />
+      <input type="hidden" name="client_id" value="dev.nickmanning" />
+      <input type="hidden" name="state" value="1234" />
+      <input type="hidden" name="scope" value="*" />
+      <br />
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>

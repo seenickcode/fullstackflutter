@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:aqueduct/aqueduct.dart';
 
 class ProtectedController extends ResourceController {
@@ -5,4 +6,7 @@ class ProtectedController extends ResourceController {
   Future<Response> somethingProtected() async {
     return Response.ok({"something": "protected"});
   }
+
+  // @Operation.post()
+  // Future<Response> example() async {}
 }
