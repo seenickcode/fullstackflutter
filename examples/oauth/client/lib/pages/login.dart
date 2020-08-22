@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:oauth/pages/oauth.dart';
+import '../models/token.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -10,7 +12,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String _accessToken;
   String _refreshToken;
-  String _authorizationCode;
 
   _LoginPageState();
 
@@ -25,18 +26,34 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             RaisedButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed('/oauth');
-              },
+              onPressed: () => presentOAuthForAccessToken(context),
               child: const Text('Login via nickmanning.dev',
                   style: TextStyle(fontSize: 20)),
             ),
             Text("Access token is: $_accessToken"),
             Text("Refresh token is: $_refreshToken"),
-            Text("Refresh token is: $_authorizationCode"),
           ],
         ),
       ),
     );
+  }
+
+  presentOAuthForAccessToken(BuildContext context) async {
+    final Token token = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => OAuthPage(),
+        ));
+    if (token == null) {
+      setState(() {
+        _accessToken = "error";
+        _refreshToken = "error";
+      });
+    } else {
+      setState(() {
+        _accessToken = token.accessToken;
+        _refreshToken = token.refreshToken;
+      });
+    }
   }
 }

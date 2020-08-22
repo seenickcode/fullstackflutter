@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'dart:io';
 import 'package:http/http.dart' as httpClient;
+import '../models/token.dart';
 
 class OAuthPage extends StatefulWidget {
   OAuthPage({Key key}) : super(key: key);
@@ -43,20 +44,22 @@ class _OAuthPageState extends State<OAuthPage> {
 
   handleURLChanged(BuildContext context, String url) async {
     print("url changed to $url");
-    if (url.startsWith('oauth://exchange') && !_fetching) {
+    // NOTE typically, we'd use a URL scheme like 'myapp://something' vs something fabricated like this
+    if (url.startsWith('http://10.0.3.2/redirect') && !_fetching) {
       final uri = Uri.parse(url);
       final authCode = uri.queryParameters['code'];
-      final tokenRespose = await getAccessToken(authCode);
-      if (Navigator.canPop(context)) {
-        Navigator.pop(context);
-      }
+      final Token token = await getAccessToken(authCode);
       setState(() {
+        // FYI used because it seems that onUrlChanged can be called twice for the same URL
         _fetching = false;
       });
+      if (Navigator.canPop(context)) {
+        Navigator.pop(context, token);
+      }
     }
   }
 
-  Future<String> getAccessToken(String authCode) async {
+  Future<dynamic> getAccessToken(String authCode) async {
     // NOTE only an example, as we should never hard code stuff like this here
     var url = 'http://10.0.3.2:8888/auth/token';
     var clientID = "dev.nickmanning";
@@ -73,8 +76,10 @@ class _OAuthPageState extends State<OAuthPage> {
     });
 
     Map<String, dynamic> respMap = json.decode(resp.body);
-    if (resp.hashCode == HttpStatus.ok) {
-      return Future.value(respMap['access_token']);
+    if (resp.statusCode == HttpStatus.ok) {
+      // NOTE we'd typically deserialize JSON properly here
+      final token = Token(respMap['access_token'], respMap['refresh_token']);
+      return Future.value(token);
     } else {
       print("error is ${respMap['error']}");
       return Future.value(null);

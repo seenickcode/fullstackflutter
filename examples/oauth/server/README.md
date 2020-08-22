@@ -9,10 +9,9 @@ NOTE: requires aqueduct 4.0.0-b1 or later.
 3. Install and start Postgres. Create a database called `oauth`
 4. Run the Aqueduct migrations which will create the schema (edit username and password here as needed): `aqueduct db upgrade --connect postgres://postgres:1234@localhost:5432/oauth`
 
-
 ## Demo
 
-1. Create an oauth client entry in the database: `aqueduct auth add-client --id dev.nickmanning --secret '1234' --redirect-uri https://google.com --connect postgres://postgres:1234@localhost:5432/oauth` (more info [here](https://aqueduct.io/docs/auth/cli/))
+1. Create an oauth client entry in the database: `aqueduct auth add-client --id dev.nickmanning --secret '1234' --redirect-uri oauth://exchange --connect postgres://postgres:1234@localhost:5432/oauth` (more info [here](https://aqueduct.io/docs/auth/cli/))
 
 Gotcha: `--secret ''` must be used or else the `_authclient` table's `hashedsecret` column will be set to null. When fetching an auth code, an error will be returned as this is expected to not be null.
 
@@ -25,12 +24,12 @@ curl -X POST http://localhost:8888/register \
   -d '{"username":"bob8", "password":"password"}'
 ```
 
-4. Simulate   
+4. Simulate
 
-4. Generate an authorization header via: `printf 'dev.nickmanning:1234' | base64`. Warning: using `echo` adds a new line character which will not work! `printf` prevents this. Also, note that we have the `:` here as we are not using a client secret.
+5. Generate an authorization header via: `printf 'dev.nickmanning:1234' | base64`. Warning: using `echo` adds a new line character which will not work! `printf` prevents this. Also, note that we have the `:` here as we are not using a client secret.
 
-5. We can now either POST to `/auth/code` to get a code or navigate to `/auth/code` to get a webpage folks can use to authenticate. In either
-situation, the username and password is submitted, along with the client ID we used to register.
+6. We can now either POST to `/auth/code` to get a code or navigate to `/auth/code` to get a webpage folks can use to authenticate. In either
+   situation, the username and password is submitted, along with the client ID we used to register.
 
 Note: `state` here is used when requesting an auth code but also is included in the redirect response query string. The client is supposed to verify this value matches.
 
@@ -73,14 +72,14 @@ curl -X POST http://localhost:8888/auth/token \
 ```
 
 9. Optional: we can call our /protected route above with the previously used stale
-token and we'll get a 401 unauthorized.
+   token and we'll get a 401 unauthorized.
 
 ## Recommended VSCode Extensions
 
 If you're using VSCode:
 
-* "Pubspec Assist" by Jeroen Meijer
-* VSCode settings:
+- "Pubspec Assist" by Jeroen Meijer
+- VSCode settings:
 
 ```
 "dart.debugExternalLibraries": true,
@@ -89,7 +88,7 @@ If you're using VSCode:
 
 ## Gotchas
 
-* Don't use `echo` to generate base64 encoded values, use `printf`
+- Don't use `echo` to generate base64 encoded values, use `printf`
 
 ## Running the Application Locally
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'login.dart';
-import 'oauth.dart';
+import 'pages/login.dart';
+import 'pages/oauth.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,10 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      routes: {
-        '/': (_) => LoginPage(),
-        '/oauth': (_) => OAuthPage(),
-      },
+      home: LoginPage(),
     );
   }
 }
