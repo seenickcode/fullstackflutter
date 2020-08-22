@@ -43,6 +43,11 @@ android {
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        // defaultConfig {
+        //     manifestPlaceholders = [
+        //         'appAuthRedirectScheme': 'dev.nickmanning'
+        // ]
+        // }
     }
 
     buildTypes {
