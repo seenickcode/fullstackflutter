@@ -12,7 +12,9 @@ NOTE: requires aqueduct 4.0.0-b1 or later.
 
 ## Demo
 
-1. Create an oauth client entry in the database: `aqueduct auth add-client --id dev.nickmanning --redirect-uri https://google.com --connect postgres://postgres:1234@localhost:5432/oauth` (more info [here](https://aqueduct.io/docs/auth/cli/))
+1. Create an oauth client entry in the database: `aqueduct auth add-client --id dev.nickmanning --secret '1234' --redirect-uri https://google.com --connect postgres://postgres:1234@localhost:5432/oauth` (more info [here](https://aqueduct.io/docs/auth/cli/))
+
+Gotcha: `--secret ''` must be used or else the `_authclient` table's `hashedsecret` column will be set to null. When fetching an auth code, an error will be returned as this is expected to not be null.
 
 2. `aqueduct serve` (or in VSCode, bin/main.dart and click Run or Debug)
 3. Register a user
@@ -20,55 +22,58 @@ NOTE: requires aqueduct 4.0.0-b1 or later.
 ```
 curl -X POST http://localhost:8888/register \
   -H 'Content-Type: application/json' \
-  -d '{"username":"bob6", "password":"password"}'
+  -d '{"username":"bob8", "password":"password"}'
 ```
 
 4. Simulate   
 
-4. Generate an authorization header via: `printf 'dev.nickmanning:' | base64`. Warning: using `echo` adds a new line character which will not work! `printf` prevents this. Also, note that we have the `:` here as we are not using a client secret.
+4. Generate an authorization header via: `printf 'dev.nickmanning:1234' | base64`. Warning: using `echo` adds a new line character which will not work! `printf` prevents this. Also, note that we have the `:` here as we are not using a client secret.
+
+5. We can now either POST to `/auth/code` to get a code or navigate to `/auth/code` to get a webpage folks can use to authenticate. In either
+situation, the username and password is submitted, along with the client ID we used to register.
+
+Note: `state` here is used when requesting an auth code but also is included in the redirect response query string. The client is supposed to verify this value matches.
 
 ```
-
-curl -v http://localhost:8888/protected \
+curl -v -X POST http://localhost:8888/auth/code \
   -H 'Content-Type: application/x-www-form-urlencoded' \
-  -H 'Authorization: Bearer xqe3NjsZ54gDZlkeX2ag7RQohkDppPeR'
-
-
-
-curl -X POST http://localhost:8888/auth/token \
-  -H 'Content-Type: application/x-www-form-urlencoded' \
-  -H 'Authorization: Basic ZGV2Lm5pY2ttYW5uaW5nOjEyMzQK' \
-  -d 'grant_type=refresh_token&refresh_token=d7ScKn1yIo8DouM2qGoI7gmde01ATf46&scopes=*'
-
-
-
-
-
-curl -X POST http://localhost:8888/auth/token \
-  -H 'Content-Type: application/x-www-form-urlencoded' \
-  -H 'Authorization: Basic ZGV2Lm5pY2ttYW5uaW5nOg==' \
-  -d 'grant_type=refresh_token'
-
-curl -X POST http://localhost:8888/auth/token \
-  -H 'Content-Type: application/x-www-form-urlencoded' \
-  -H 'Authorization: Basic ZGV2Lm5pY2ttYW5uaW5nOg==' \
-  -d 'username=bob6&password=password&grant_type=password'
-
-
-
-
-
-curl -v http://localhost:8888/protected \
-  -H 'Content-Type: application/x-www-form-urlencoded' \
-  -H 'Authorization: Bearer 2kCdHmfAKEKrDRcKA4jeWK44drm6k7M'
-
-curl -X POST http://localhost:8888/auth/token \
-  -H 'Content-Type: application/x-www-form-urlencoded' \
-  -H 'Authorization: Basic ZGV2Lm5pY2ttYW5uaW5nOg==' \
-  -d 'grant_type=refresh_token&refresh_token=kjasdiuz9u3namnsd'
-
+  -H 'Authorization: Basic ZGV2Lm5pY2ttYW5uaW5nOjEyMzQ=' \
+  -d 'response_type=code&client_id=dev.nickmanning&state=1234&username=bob7&password=password'
 ```
 
+The server will respond with a redirect via 302 HTTP code and `location` in the repsonse header in this format: `<your redirect URI>?code=<auth code>&state=<your state value>`. This is why we use `-v` in the curl example above, so that we can see the value of `location`.
+
+OR we can go to http://localhost:8888/auth/code?response_type=code&client_id=dev.nickmanning&state=1234
+to login and get a code.
+
+6. Now we can request an auth token using our `code` value:
+
+```
+curl -X POST http://localhost:8888/auth/token \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -H 'Authorization: Basic ZGV2Lm5pY2ttYW5uaW5nOjEyMzQ=' \
+  -d 'grant_type=authorization_code&code=2Ux5NSWFuw28FgaHXnFUHwTiTQ7Yl0zw'
+```
+
+7. Now we can access our protected resource
+
+```
+curl -v http://localhost:8888/protected \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -H 'Authorization: Bearer PWkkbxEZzzlX7WdzVYwV1zyBtdbG9CoU'
+```
+
+8. Our OAuth client can refresh the auth token now via
+
+```
+curl -X POST http://localhost:8888/auth/token \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -H 'Authorization: Basic ZGV2Lm5pY2ttYW5uaW5nOjEyMzQ=' \
+  -d 'grant_type=refresh_token&refresh_token=kcjQKMQfHYYnrsS9T6E9DkypMVt7mhCc'
+```
+
+9. Optional: we can call our /protected route above with the previously used stale
+token and we'll get a 401 unauthorized.
 
 ## Recommended VSCode Extensions
 
@@ -92,21 +97,7 @@ Run `aqueduct serve` from this directory to run the application. For running wit
 
 To generate a SwaggerUI client, run `aqueduct document client`.
 
-## Trying Things Out
+## TODO List
 
-1. Start the server `aqueduct serve`
-2. Create a user: `curl -X POST http://localhost:8888/register -H 'Content-Type: application/json' -d '{"username":"bob", "password":"password"}'`
-
-## Running Application Tests
-
-To run all tests for this application, run the following in this directory:
-
-```
-pub run test
-```
-
-The default configuration file used when testing is `config.src.yaml`. This file should be checked into version control. It also the template for configuration files used in deployment.
-
-## Deploying an Application
-
-See the documentation for [Deployment](https://aqueduct.io/docs/deploy/).
+- Auth code + PKCE support (not supported in Aqueduct at the moment)
+- Ability to use Auth code flow without a `client_secret` (we have to hard code it in our examples)

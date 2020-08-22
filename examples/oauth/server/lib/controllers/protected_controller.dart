@@ -6,7 +6,4 @@ class ProtectedController extends ResourceController {
   Future<Response> somethingProtected() async {
     return Response.ok({"something": "protected"});
   }
-
-  // @Operation.post()
-  // Future<Response> example() async {}
 }
