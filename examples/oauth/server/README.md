@@ -11,9 +11,9 @@ NOTE: requires aqueduct 4.0.0-b1 or later.
 
 ## Demo
 
-1. Create an oauth client entry in the database: `aqueduct auth add-client --id dev.nickmanning --secret '1234' --redirect-uri oauth://exchange --connect postgres://postgres:1234@localhost:5432/oauth` (more info [here](https://aqueduct.io/docs/auth/cli/))
+1. Create an oauth client entry in the database: `aqueduct auth add-client --id dev.nickmanning --secret '1234' --redirect-uri http://10.0.3.2/redirect --connect postgres://postgres:1234@localhost:5432/oauth` (more info [here](https://aqueduct.io/docs/auth/cli/))
 
-Gotcha: `--secret ''` must be used or else the `_authclient` table's `hashedsecret` column will be set to null. When fetching an auth code, an error will be returned as this is expected to not be null.
+Gotcha: `10.0.3.2` above is the default IP address Genymotion emulator uses for macOS.
 
 2. `aqueduct serve` (or in VSCode, bin/main.dart and click Run or Debug)
 3. Register a user
@@ -21,7 +21,7 @@ Gotcha: `--secret ''` must be used or else the `_authclient` table's `hashedsecr
 ```
 curl -X POST http://localhost:8888/register \
   -H 'Content-Type: application/json' \
-  -d '{"username":"bob8", "password":"password"}'
+  -d '{"username":"bob38", "password":"password"}'
 ```
 
 4. Simulate
