@@ -31,7 +31,9 @@ class _HomeState extends State<Home> {
               RaisedButton(child: Text("Reset"), onPressed: handleResetTap),
             ]),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              Text(message, style: TextStyle(fontSize: 26.0)),
+              Flexible(
+                  child: Text(message,
+                      maxLines: 20, style: TextStyle(fontSize: 18.0))),
             ]),
           ])),
     );
