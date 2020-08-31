@@ -3,7 +3,12 @@
 ## How We Set this Project Up
 
 1. `aqueduct create <project name, snake case>`
-2. Install Postgres
+
+2. Note, installing a database is NOT required for this example!
+
+## Next Steps
+
+1. Covering Postgres
 
 ## Running the Application Locally
 
