@@ -1,9 +1,11 @@
 import 'package:server/server.dart';
 
 Future main() async {
+  final port = int.parse(Platform.environment["PORT"] ?? "8888");
+
   final app = Application<ServerChannel>()
-      ..options.configurationFilePath = "config.yaml"
-      ..options.port = 8888;
+    ..options.configurationFilePath = "config.yaml"
+    ..options.port = port;
 
   await app.startOnCurrentIsolate();
 
