@@ -1,5 +1,11 @@
 # server
 
+## Warning
+
+This project requires a specific version of Aquduct! Please use this command to install the correct version.
+
+`pub global activate aqueduct 4.0.0-b1`
+
 ## How We Set this Project Up
 
 1. `aqueduct create <project name, snake case>`
