@@ -22,7 +22,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/fonts/
-    - local.env
 
   fonts:
     - family: Open Sans
