@@ -6,15 +6,10 @@ RUN pub get --no-precompile
 ADD . /app/
 RUN pub get --offline --no-precompile
 
-WORKDIR /app
-
-# EXPOSE 8888
-# ENV PORT 8888
-
 CMD []
-# ENTRYPOINT pub run aqueduct:aqueduct serve --port ${PORT}
-ENTRYPOINT ["/usr/bin/dart", "bin/main.dart"]
+
+ENTRYPOINT ["/usr/bin/dart", "bin/server.dart"]
 
 # Service must listen to $PORT environment variable.
 # This default value facilitates local development.
-ENV PORT 8888
+ENV PORT 8080

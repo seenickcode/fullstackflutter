@@ -1,5 +1,16 @@
 # server
 
+## Deploying
+
+2. Sign up for Google Cloud Platform.
+3. Create a project, enable billing.
+1. Get `docker`, `gcloud` CLI tool (["Google Cloud SDK"](https://cloud.google.com/sdk/docs/install)). (Ensure you run `gcloud init`) to authenticate with your GCP account. Then run `gcloud auth configure-docker` so you can [push images](https://cloud.google.com/container-registry/docs/pushing-and-pulling).
+4. Enable GCP Container Registry (search for it in the GCP console at `console.cloud.google.com`).
+5. Build your docker image using the canonical naming convention `gcr.io/<my project ID>/<my repository name>:<version>`, such as `gcr.io/foobar-123/simple_end_to_end:v0.1`. If you do this and push the image, the GCP Container Registry Repository will automatically be created for you. So from this directory, run: `docker build -t gcr.io/<my project ID>/<my repository name>:<version> .`. (Don't forget the `.` character at the end)
+6. Test your image by running it: `docker run --rm -it -p 8888 gcr.io/<my project ID>/<my repository name>:<version>`
+6. Push your image `docker push gcr.io/<my project ID>/<my repository name>:<version>`
+7. Deploy your image to Google Cloud Run. Either click on '...' icon on your image version in GCP Container Registry and choose "Deploy with Google Cloud Run" or run the command: `gcloud run deploy simple-e2e --image gcr.io/<my project ID>/<my repository name>:<version>`. Choose option 1, `[1] Cloud Run (fully managed)`.
+
 ## Warning
 
 This project requires a specific version of Aquduct! Please use this command to install the correct version.
@@ -11,10 +22,6 @@ This project requires a specific version of Aquduct! Please use this command to 
 1. `aqueduct create <project name, snake case>`
 
 2. Note, installing a database is NOT required for this example!
-
-## Next Steps
-
-1. Covering Postgres
 
 ## Running the Application Locally
 
