@@ -8,7 +8,7 @@ RUN pub get --offline --no-precompile
 
 CMD []
 
-ENTRYPOINT ["/usr/bin/dart", "bin/server.dart"]
+ENTRYPOINT ["/usr/bin/dart", "bin/main.dart"]
 
 # Service must listen to $PORT environment variable.
 # This default value facilitates local development.
