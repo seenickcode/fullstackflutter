@@ -12,4 +12,4 @@ ENTRYPOINT ["/usr/bin/dart", "bin/main.dart"]
 
 # Service must listen to $PORT environment variable.
 # This default value facilitates local development.
-ENV PORT 8888
+ENV PORT 8080
