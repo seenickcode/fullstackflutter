@@ -1,8 +1,5 @@
 # Full Stack Flutter: Deploying Dart
 
-Titles:
-- Serverless Dart
-
 Continuing out Full Stack Flutter series, we explore how to take our backend Dart web service API and deploy it to Google Cloud Run.
 
 We'll cover:
@@ -14,7 +11,7 @@ We'll cover:
 - Intro to GCP Container Registry
 - Pushing Docker images to Google Cloud
 - Intro to Google Cloud Run
-- Deploying your Docker Image
+- Deploying your Docker Image 
 
 Dart is awesome, but....how do you ship it?
 
@@ -37,6 +34,14 @@ Why even write backend code?
 7. Push your image `docker push gcr.io/<my project ID>/<my repository name>:<version>`
 
 8. Deploy your image to Google Cloud Run. Either click on '...' icon on your image version in GCP Container Registry and choose "Deploy with Google Cloud Run" or run the command: `gcloud run deploy simple-e2e --image gcr.io/<my project ID>/<my repository name>:<version>`. Choose option 1, `[1] Cloud Run (fully managed)`.
+
+### Bonus: Automatically Building with Google Cloud Build
+
+1. Enable the Google Cloud Build API via the GCP Console.
+
+2. 
+
+### Bonus: Automatically Deploying with Google Cloud Run
 
 ## Warning
 
