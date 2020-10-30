@@ -3,6 +3,8 @@
 Continuing out Full Stack Flutter series, we explore how to take our backend Dart web service API and deploy it to Google Cloud Run.
 
 We'll cover:
+- Preview of what we'll do
+  - 
 - Installing Docker
 - Building Docker images
 - Running Docker containers
@@ -28,7 +30,7 @@ Why even write backend code?
 4. Enable GCP Container Registry (search for it in the GCP console at `console.cloud.google.com`).
 
 5. Build your docker image using the canonical naming convention `gcr.io/<my project ID>/<my repository name>:<version>`, such as `gcr.io/foobar-123/simple_end_to_end:v0.1`. If you do this and push the image, the GCP Container Registry Repository will automatically be created for you. So from this directory, run: `docker build -t gcr.io/<my project ID>/<my repository name>:<version> .`. (Don't forget the `.` character at the end)
-
+ 
 6. Test your image by running it: `docker run --rm -it -p 8888:8888 gcr.io/<my project ID>/<my repository name>:<version>`
 
 7. Push your image `docker push gcr.io/<my project ID>/<my repository name>:<version>`
@@ -39,7 +41,13 @@ Why even write backend code?
 
 1. Enable the Google Cloud Build API via the GCP Console.
 
-2. 
+2. Configure a new trigger with these settings:
+
+Use all the default settings and simply tweak the following:
+
+- Event: "Push to a Branch"
+- Build configuration: Dockerfile
+- Dockerfile directory: `simple_end_to_end/04-deploying-server/server`
 
 ### Bonus: Automatically Deploying with Google Cloud Run
 
