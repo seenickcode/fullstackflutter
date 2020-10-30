@@ -1,9 +1,9 @@
 FROM google/dart
 
 WORKDIR /app
-ADD pubspec.* /app/
+COPY pubspec.* /app/
 RUN pub get --no-precompile
-ADD . /app/
+COPY . /app/
 RUN pub get --offline --no-precompile
 
 CMD []
