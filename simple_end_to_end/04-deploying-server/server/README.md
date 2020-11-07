@@ -35,7 +35,7 @@ Why even write backend code?
 
 7. Push your image `docker push gcr.io/<my project ID>/<my repository name>:<version>`
 
-8. Deploy your image to Google Cloud Run. Either click on '...' icon on your image version in GCP Container Registry and choose "Deploy with Google Cloud Run" or run the command: `gcloud run deploy simple-e2e --image gcr.io/<my project ID>/<my repository name>:<version>`. Choose option 1, `[1] Cloud Run (fully managed)`.
+8. Deploy your image to Google Cloud Run. Either click on '...' icon on your image version in GCP Container Registry and choose "Deploy with Google Cloud Run" or run the command: `gcloud run deploy simple-e2e  --memory 1Gi --image gcr.io/<my project ID>/<my repository name>:<version>`. Choose option 1, `[1] Cloud Run (fully managed)`.
 
 ### Bonus: Automatically Building with Google Cloud Build
 
